@@ -132,8 +132,18 @@
                     <a href="#skills" class="hover:text-yellow-400 transition-colors">Kỹ năng</a>
                     <a href="#projects" class="hover:text-yellow-400 transition-colors">Hoạt động</a>
                 </div>
-                
                 <div class="flex items-center space-x-4">
+                    <div id="aqi-container" class="hidden md:flex items-center px-3 py-1.5 rounded-lg glassmorphism border border-slate-700/50 transition-all hover:scale-105 cursor-help group relative" title="Chất lượng không khí tại Bắc Ninh">
+                        <i class="fas fa-wind text-slate-400 mr-2 animate-pulse"></i>
+                        <div class="flex flex-col items-end leading-none">
+                            <span class="text-[10px] text-slate-400 uppercase tracking-wider">AQI (Hà Nội)</span>
+                            <span id="aqi-value" class="font-bold text-yellow-400">...</span>
+                        </div>
+        
+                        <div id="aqi-status" class="absolute top-full mt-2 right-0 w-32 p-2 rounded-lg bg-slate-800 text-center text-xs shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-slate-700">
+                            Đang tải...
+                        </div>
+                    </div>
                     <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-700 transition-colors">
                         <i class="fas fa-moon text-yellow-400"></i>
                     </button>
@@ -685,5 +695,88 @@
             skillObserver.observe(bar);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'967c908f97f28512',t:'MTc1Mzk1OTM0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'967c908f97f28512',t:'MTc1Mzk1OTM0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script>
+    // --- SCRIPT AQI (Phiên bản khớp với HTML hiện tại của bạn) ---
+    async function fetchAQI() {
+        // Token và URL của bạn
+        const myToken = '0413078940d7c6b3592fd55f2b68ee87f28e99f0';
+        const url = `https://api.waqi.info/feed/here/?token=${myToken}`;
+
+        // Lấy đúng các ID trong HTML của bạn
+        const aqiValueEl = document.getElementById('aqi-value');
+        const aqiStatusEl = document.getElementById('aqi-status');
+        
+        // Lấy icon để đổi màu (tìm thẻ i bên trong aqi-container)
+        const aqiIcon = document.querySelector('#aqi-container i');
+        
+        // Lấy dòng chữ "AQI (BN)" để cập nhật tên thành phố cho đúng thực tế
+        const aqiLabel = document.querySelector('#aqi-container span.uppercase');
+
+        try {
+            const response = await fetch(url);
+            const result = await response.json();
+
+            if (result.status === 'ok') {
+                const data = result.data;
+                const aqi = data.aqi;
+                
+                // Lấy tên thành phố từ API và làm gọn
+                let cityName = data.city.name.split(',')[0]; 
+                if (cityName.length > 10) cityName = cityName.substring(0, 10) + '..';
+
+                // 1. Cập nhật số liệu
+                aqiValueEl.innerText = aqi;
+                
+                // 2. Cập nhật tên địa điểm (Thay chữ BN cứng bằng địa điểm thật)
+                if(aqiLabel) aqiLabel.innerText = `AQI (${cityName})`;
+
+                // 3. Xử lý màu sắc và trạng thái
+                let colorClass = '';
+                let statusText = '';
+                
+                // Xóa các lớp màu cũ
+                aqiValueEl.className = "font-bold"; 
+                aqiStatusEl.className = "absolute top-full mt-2 right-0 w-max px-3 py-1 rounded-lg bg-slate-800 text-center text-xs shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-slate-700 z-50";
+                
+                if (aqiIcon) aqiIcon.className = "fas mr-2 animate-pulse"; // Reset icon
+
+                if (aqi <= 50) {
+                    colorClass = 'text-green-400';
+                    statusText = 'Cho phép em thở';
+                    if(aqiIcon) aqiIcon.classList.add('fa-leaf', 'text-green-400');
+                } else if (aqi <= 100) {
+                    colorClass = 'text-yellow-400';
+                    statusText = 'Tôi không cho phép em ra ngoài';
+                    if(aqiIcon) aqiIcon.classList.add('fa-wind', 'text-yellow-400');
+                } else if (aqi <= 150) {
+                    colorClass = 'text-orange-400';
+                    statusText = 'Đừng ra đường nữa, ở lại với tôi';
+                    if(aqiIcon) aqiIcon.classList.add('fa-smog', 'text-orange-400');
+                } else {
+                    colorClass = 'text-red-500';
+                    statusText = 'Tôi lo cho em lắm đấy!';
+                    if(aqiIcon) aqiIcon.classList.add('fa-biohazard', 'text-red-500');
+                }
+
+                // Áp dụng màu mới
+                aqiValueEl.classList.add(colorClass);
+                aqiStatusEl.classList.add(colorClass); // Đổi màu chữ trong tooltip
+                aqiStatusEl.innerText = statusText;
+
+            } else {
+                throw new Error('API Error');
+            }
+
+        } catch (error) {
+            console.error('Lỗi AQI:', error);
+            aqiValueEl.innerText = "--";
+            aqiStatusEl.innerText = "Lỗi kết nối";
+        }
+    }
+
+    // Gọi hàm
+    fetchAQI();
+</script>
+</body>
 </html>
