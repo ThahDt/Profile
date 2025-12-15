@@ -410,140 +410,97 @@
     </section>
 
     <!-- Skills & Projects -->
-    <section id="skills" class="py-20">
+   <section id="skills" class="py-20 bg-slate-800/50">
         <div class="container mx-auto px-6">
             <div class="fade-in">
-                <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Kỹ năng & Dự án</h2>
+                <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Năng lực & Dự án</h2>
                 
-                <div class="grid lg:grid-cols-2 gap-12">
-                    <!-- Skills -->
-                    <div>
-                        <h3 class="text-2xl font-bold mb-8 text-yellow-400">Kỹ năng chuyên môn</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="font-semibold">Sau</span>
-                                    <span class="text-yellow-400">90%</span>
-                                </div>
-                                <div class="bg-slate-700 rounded-full h-2">
-                                    <div class="skill-bar rounded-full" style="width: 90%"></div>
-                                </div>
-                            </div>
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    
+                    <div class="flex items-center justify-center py-10">
+                        <div class="relative w-full max-w-sm aspect-square flex items-center justify-center">
+                            <div class="absolute inset-0 bg-yellow-400/20 blur-[60px] rounded-full"></div>
                             
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="font-semibold">này</span>
-                                    <span class="text-yellow-400">85%</span>
+                            <div class="grid grid-cols-3 gap-3 rotate-12 scale-90 md:scale-100">
+                                <div class="w-24 h-24 bg-slate-800/80 backdrop-blur border border-yellow-400/30 flex flex-col items-center justify-center hover:bg-yellow-400 hover:scale-110 transition-all duration-300 group cursor-pointer" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fab fa-python text-3xl text-yellow-400 group-hover:text-slate-900 mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-300 group-hover:text-slate-900">Python</span>
                                 </div>
-                                <div class="bg-slate-700 rounded-full h-2">
-                                    <div class="skill-bar rounded-full" style="width: 85%"></div>
+                                <div class="w-24 h-24 bg-slate-800/80 backdrop-blur border border-yellow-400/30 flex flex-col items-center justify-center hover:bg-blue-500 hover:border-blue-500 hover:scale-110 transition-all duration-300 group cursor-pointer mt-12" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fas fa-database text-3xl text-blue-400 group-hover:text-white mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-300 group-hover:text-white">SQL</span>
                                 </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="font-semibold">sẽ</span>
-                                    <span class="text-yellow-400">80%</span>
+                                <div class="w-24 h-24 bg-slate-800/80 backdrop-blur border border-yellow-400/30 flex flex-col items-center justify-center hover:bg-green-500 hover:border-green-500 hover:scale-110 transition-all duration-300 group cursor-pointer" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fas fa-table text-3xl text-green-400 group-hover:text-white mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-300 group-hover:text-white">Excel</span>
                                 </div>
-                                <div class="bg-slate-700 rounded-full h-2">
-                                    <div class="skill-bar rounded-full" style="width: 80%"></div>
+                                <div class="w-24 h-24 bg-slate-800/80 backdrop-blur border border-yellow-400/30 flex flex-col items-center justify-center hover:bg-purple-500 hover:border-purple-500 hover:scale-110 transition-all duration-300 group cursor-pointer" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fas fa-brain text-3xl text-purple-400 group-hover:text-white mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-300 group-hover:text-white">Logic</span>
                                 </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="font-semibold">viết</span>
-                                    <span class="text-yellow-400">75%</span>
+                                <div class="w-24 h-24 bg-yellow-400 flex flex-col items-center justify-center scale-110 shadow-lg shadow-yellow-400/50 mt-12 z-10" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fas fa-language text-3xl text-slate-900 mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-900">English</span>
                                 </div>
-                                <div class="bg-slate-700 rounded-full h-2">
-                                    <div class="skill-bar rounded-full" style="width: 75%"></div>
+                                <div class="w-24 h-24 bg-slate-800/80 backdrop-blur border border-yellow-400/30 flex flex-col items-center justify-center hover:bg-yellow-600 hover:border-yellow-600 hover:scale-110 transition-all duration-300 group cursor-pointer" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fas fa-chart-pie text-3xl text-yellow-600 group-hover:text-white mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-300 group-hover:text-white">BI Tool</span>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8">
-                            <h4 class="text-lg font-semibold mb-4 text-yellow-400">Kỹ năng khác</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Excel</span>
-                                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Stata</span>
-                                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">PowerBI</span>
-                                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Word</span>
-                                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">LaTeX</span>
-                                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Python</span>
+                                <div class="w-24 h-24 bg-slate-800/80 backdrop-blur border border-yellow-400/30 flex flex-col items-center justify-center hover:bg-red-500 hover:border-red-500 hover:scale-110 transition-all duration-300 group cursor-pointer" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                    <i class="fas fa-search text-3xl text-red-400 group-hover:text-white mb-1"></i>
+                                    <span class="text-[10px] font-bold text-slate-300 group-hover:text-white">Research</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Activities -->
-                    <div id="projects">
-                        <h3 class="text-2xl font-bold mb-8 text-yellow-400">Hoạt động nổi bật</h3>
-                        <div class="space-y-6">
-                            <div class="glassmorphism rounded-lg p-6 hover:scale-105 transition-transform cursor-pointer">
-                                <div class="flex items-center mb-4">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center mr-4">
-                                        <i class="fas fa-users text-white"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-bold">LimC</h4>
-                                        <p class="text-slate-400 text-sm">Admin</p>
-                                    </div>
-                                </div>
-                                <p class="text-slate-300 mb-4">
-                                    Marketing, Trợ giảng, Biên tập, Leader, Chăm sóc khách hàng.
-                                </p>
-                                <div class="flex space-x-2">
-                                    <span class="text-yellow-400 text-sm">
-                                        <i class="fas fa-calendar mr-1"></i>15+ sự kiện
-                                    </span>
-                                    <span class="text-yellow-400 text-sm">
-                                        <i class="fas fa-user-friends mr-1"></i>1000+ thành viên
-                                    </span>
-                                </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-yellow-400">Bộ công cụ</h3>
+                        
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold text-white mb-3 border-l-4 border-yellow-400 pl-3">Phân tích dữ liệu</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-all cursor-default border border-slate-600 flex items-center">
+                                    <i class="fab fa-python mr-2"></i>Python
+                                </span>
+                                <span class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-all cursor-default border border-slate-600 flex items-center">
+                                    <i class="fas fa-chart-pie mr-2"></i>PowerBI
+                                </span>
+                                <span class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-all cursor-default border border-slate-600 flex items-center">
+                                    <i class="fas fa-database mr-2"></i>Stata
+                                </span>
                             </div>
-                            
-                            <div class="glassmorphism rounded-lg p-6 hover:scale-105 transition-transform cursor-pointer">
-                                <div class="flex items-center mb-4">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center mr-4">
-                                        <i class="fas fa-chart-line text-white"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-bold">Sáng tạo nội dung</h4>
-                                        <p class="text-slate-400 text-sm">Chủ kênh TikTok: Thah Dt</p>
-                                    </div>
-                                </div>
-                                <p class="text-slate-300 mb-4">
-                                    Phông bạt là chính, dụ dỗ là 10.
-                                </p>
-                                <div class="flex space-x-2">
-                                    <span class="text-yellow-400 text-sm">
-                                        <i class="fas fa-user-friends mr-1"></i>20000 follower
-                                    </span>
-                                    <span class="text-yellow-400 text-sm">
-                                        <i class="fas fa-star mr-1"></i>Siêu yêu
-                                    </span>
-                                </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold text-white mb-3 border-l-4 border-yellow-400 pl-3">Tin học văn phòng & Thiết kế</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-all cursor-default border border-slate-600 flex items-center">
+                                    <i class="fas fa-file-excel mr-2"></i>Excel
+                                </span>
+                                <span class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-all cursor-default border border-slate-600 flex items-center">
+                                    <i class="fas fa-file-word mr-2"></i>Word
+                                </span>
+                                <span class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-yellow-400 hover:text-slate-900 transition-all cursor-default border border-slate-600 flex items-center">
+                                    <i class="fas fa-palette mr-2"></i>Canva
+                                </span>
                             </div>
-                            
-                            <div class="glassmorphism rounded-lg p-6 hover:scale-105 transition-transform cursor-pointer">
-                                <div class="flex items-center mb-4">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center mr-4">
-                                        <i class="fas fa-heart text-white"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-lg font-bold">Đứa con trường F</h4>
-                                        <p class="text-slate-400 text-sm">Nô lệ KTQT</p>
-                                    </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-3 border-l-4 border-yellow-400 pl-3">Hoạt động nổi bật</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-slate-800 border border-slate-700 hover:border-yellow-400 transition-colors">
+                                    <div class="flex items-center"><i class="fas fa-users text-blue-400 mr-3"></i><span>Admin LimC</span></div>
+                                    <span class="text-xs text-slate-400">2023 - Nay</span>
                                 </div>
-                                <p class="text-slate-300 mb-4">
-                                    Sợ ơi sợ.
-                                </p>
-                                <div class="flex space-x-2">
-                                    <span class="text-yellow-400 text-sm">
-                                        <i class="fas fa-clock mr-1"></i>? năm
-                                    </span>
-                                    <span class="text-yellow-400 text-sm">
-                                        <i class="fas fa-home mr-1"></i>1 nhà
-                                    </span>
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-slate-800 border border-slate-700 hover:border-pink-500 transition-colors">
+                                    <div class="flex items-center"><i class="fab fa-tiktok text-pink-400 mr-3"></i><span>TikTok Thah Dt</span></div>
+                                    <span class="text-xs text-slate-400">20k Follows</span>
+                                </div>
+                                 <div class="flex items-center justify-between p-3 rounded-lg bg-slate-800 border border-slate-700 hover:border-pink-500 transition-colors">
+                                    <div class="flex items-center"><i class="fas fa-university text-red-400 mr-3"></i><span>Foreign Trade University</span></div>
+                                    <span class="text-xs text-slate-400">2023 - Nay</span>
                                 </div>
                             </div>
                         </div>
@@ -552,7 +509,56 @@
             </div>
         </div>
     </section>
+<section id="donate" class="py-20 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400/20 rounded-full blur-[100px] -z-10"></div>
+    <div class="container mx-auto px-6">
+        <div class="fade-in max-w-4xl mx-auto">
+            <div class="glassmorphism rounded-2xl p-8 md:p-12 border border-yellow-400/30 relative overflow-hidden">
+                
+                <div class="text-center mb-10">
+                    <div class="inline-block p-3 rounded-full bg-yellow-400/10 mb-4">
+                        <i class="fas fa-coins text-3xl text-yellow-400"></i>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">DỰ ÁN NUÔI TÔI</h2>
+                    <p class="text-slate-400">Có thể bạn đang nuôi một tỷ phú trong tương lai!</p>
+                </div>
 
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6">
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                            <p class="text-sm text-slate-400 mb-1">Ngân hàng</p>
+                            <p class="text-xl font-bold text-white">MB Bank</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700 group cursor-pointer" onclick="copySTK()">
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-sm text-slate-400">Số tài khoản</p>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <p id="stk-number" class="text-2xl font-bold text-yellow-400 font-mono tracking-wider">193987654321</p>
+                                <i class="fas fa-copy text-slate-400 group-hover:text-yellow-400 transition-colors"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                            <p class="text-sm text-slate-400 mb-1">Chủ tài khoản</p>
+                            <p class="text-xl font-bold text-white uppercase">DO THANH DAT</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <div class="bg-white p-4 rounded-xl shadow-2xl">
+                            <img src="https://img.vietqr.io/image/MB-193987654321-compact.png?amount=0&addInfo=Nuoi%20Dat%20Di" 
+                                 class="w-48 h-48 object-contain rounded-lg">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="copy-toast" class="absolute top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform -translate-y-20 transition-transform duration-300 flex items-center gap-2 z-50">
+                    <i class="fas fa-check-circle"></i> Đã sao chép số tài khoản!
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
     <!-- Footer -->
@@ -777,6 +783,17 @@
 
     // Gọi hàm
     fetchAQI();
+    // Hàm Copy Số tài khoản
+    function copySTK() {
+        const stk = document.getElementById('stk-number').innerText;
+        navigator.clipboard.writeText(stk).then(() => {
+            const toast = document.getElementById('copy-toast');
+            toast.classList.remove('-translate-y-20'); 
+            setTimeout(() => {
+                toast.classList.add('-translate-y-20'); 
+            }, 2000);
+        });
+    }
 </script>
 </body>
 </html>
