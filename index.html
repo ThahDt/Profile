@@ -41,6 +41,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            pointer-events: none;
         }
         
         .particle {
@@ -103,17 +104,33 @@
             box-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
         }
         
+        /* Light Mode Variables override */
         .light-mode {
             --bg-primary: #FFFFFF;
             --bg-secondary: #F8FAFC;
             --text-primary: #1E293B;
             --text-secondary: #64748B;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(203, 213, 225, 0.5);
         }
         
+        .light-mode body { background-color: var(--bg-secondary); color: var(--text-primary); }
         .light-mode .bg-slate-900 { background-color: var(--bg-primary) !important; }
         .light-mode .bg-slate-800 { background-color: var(--bg-secondary) !important; }
         .light-mode .text-slate-100 { color: var(--text-primary) !important; }
-        .light-mode .text-slate-400 { color: var(--text-secondary) !important; }
+        .light-mode .text-slate-300 { color: var(--text-secondary) !important; }
+        .light-mode .text-slate-400 { color: #94a3b8 !important; }
+        .light-mode .glassmorphism { 
+            background: var(--glass-bg); 
+            border-color: var(--glass-border);
+        }
+        
+        /* Custom Input Styles for GPA Tool */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100 overflow-x-hidden">
@@ -130,7 +147,8 @@
                     <a href="#about" class="hover:text-yellow-400 transition-colors">Thông tin</a>
                     <a href="#education" class="hover:text-yellow-400 transition-colors">Học vấn</a>
                     <a href="#skills" class="hover:text-yellow-400 transition-colors">Kỹ năng</a>
-                    <a href="#projects" class="hover:text-yellow-400 transition-colors">Hoạt động</a>
+                    <a href="#gpa-tool" class="hover:text-yellow-400 transition-colors">Góc học tập</a>
+                    <a href="#donate" class="hover:text-yellow-400 transition-colors">Dự án nuôi tôi</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="aqi-container" class="hidden md:flex items-center px-3 py-1.5 rounded-lg glassmorphism border border-slate-700/50 transition-all hover:scale-105 cursor-help group relative" title="Chất lượng không khí tại Bắc Ninh">
@@ -140,7 +158,7 @@
                             <span id="aqi-value" class="font-bold text-yellow-400">...</span>
                         </div>
         
-                        <div id="aqi-status" class="absolute top-full mt-2 right-0 w-32 p-2 rounded-lg bg-slate-800 text-center text-xs shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-slate-700">
+                        <div id="aqi-status" class="absolute top-full mt-2 right-0 w-32 p-2 rounded-lg bg-slate-800 text-center text-xs shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-slate-700 z-50">
                             Đang tải...
                         </div>
                     </div>
@@ -167,7 +185,7 @@
         </div>
         
         <!-- Vertical Navigation -->
-        <div class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
+        <div class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
             <div class="glassmorphism rounded-2xl p-4">
                 <div class="flex flex-col space-y-4">
                     <a href="#home" class="w-12 h-12 rounded-lg bg-yellow-400 flex items-center justify-center text-slate-900 hover:scale-110 transition-transform" title="Trang chủ">
@@ -182,8 +200,12 @@
                     <a href="#skills" class="w-12 h-12 rounded-lg bg-slate-700 hover:bg-yellow-400 flex items-center justify-center text-slate-100 hover:text-slate-900 hover:scale-110 transition-all" title="Kỹ năng">
                         <i class="fas fa-chart-bar"></i>
                     </a>
-                    <a href="#projects" class="w-12 h-12 rounded-lg bg-slate-700 hover:bg-yellow-400 flex items-center justify-center text-slate-100 hover:text-slate-900 hover:scale-110 transition-all" title="Hoạt động">
-                        <i class="fas fa-project-diagram"></i>
+                    <!-- Tool Icon Moved Here -->
+                    <a href="#gpa-tool" class="w-12 h-12 rounded-lg bg-slate-700 hover:bg-yellow-400 flex items-center justify-center text-slate-100 hover:text-slate-900 hover:scale-110 transition-all" title="Góc học tập">
+                        <i class="fas fa-calculator"></i>
+                    </a>
+                    <a href="#donate" class="w-12 h-12 rounded-lg bg-slate-700 hover:bg-yellow-400 flex items-center justify-center text-slate-100 hover:text-slate-900 hover:scale-110 transition-all" title="Dự án nuôi tôi">
+                        <i class="fas fa-coins"></i>
                     </a>
                     <a href="FileCV.pdf" download class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 flex items-center justify-center text-slate-900 hover:scale-110 transition-all shadow-lg hover:shadow-yellow-400/50" title="Tải CV">
                         <i class="fas fa-download"></i>
@@ -193,21 +215,24 @@
         </div>
         
         <div class="container mx-auto px-6 z-10">
-            <div class="flex items-center justify-center space-x-12">
+            <div class="flex flex-col md:flex-row items-center justify-center md:space-x-12 space-y-8 md:space-y-0">
                 <!-- Profile Image -->
                 <div class="flex-shrink-0">
-                    <div class="w-80 h-80 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 p-1 overflow-hidden">
-                        <img src="avatar.jpg" alt="Đỗ Thành Đạt" 
-                            class="w-full h-full object-cover rounded-lg">
+                    <div class="w-80 h-80 md:w-80 md:h-80 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 p-1 overflow-hidden">
+                        <!-- Placeholder for avatar -->
+                        <div class="w-full h-full bg-slate-800 flex items-center justify-center rounded-lg">
+                           <img src="avatar.jpg" alt="Đỗ Thành Đạt" 
+                                class="w-full h-full object-cover rounded-lg">
+                        </div>
                     </div>
                 </div>
 
                 <!-- Main Content -->
-                <div class="max-w-xl">
-                    <h1 class="text-6xl font-bold mb-6 gradient-text text-center">
+                <div class="max-w-xl text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 gradient-text">
                         Đỗ Thành Đạt
                     </h1>
-                    <div class="text-xl text-slate-400 mb-8 h-8 text-center">
+                    <div class="text-xl text-slate-400 mb-8 h-8 flex justify-center md:justify-start">
                         <span id="typewriter" class="typewriter"></span>
                     </div>
                     <div class="text-lg text-slate-300 mb-8 leading-relaxed text-justify">
@@ -218,14 +243,14 @@
                         </p>
                     </div>
                     
-                    <div class="flex gap-4">
-                        <a href="#projects" class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 px-8 py-3 rounded-lg font-semibold glow-button">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#projects" class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-slate-900 px-8 py-3 rounded-lg font-semibold glow-button text-center">
                             Xem hoạt động
                         </a>
-                        <a href="#about" class="border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 hover:text-slate-900 transition-all">
+                        <a href="#about" class="border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 hover:text-slate-900 transition-all text-center">
                             Thông tin cá nhân
                         </a>
-                        <a href="FileCV.pdf" download class="bg-gradient-to-br from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 px-8 py-3 rounded-lg font-semibold shadow-lg hover:shadow-yellow-400/50 transition-all hover:scale-105 inline-flex items-center">
+                        <a href="FileCV.pdf" download class="bg-gradient-to-br from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 px-8 py-3 rounded-lg font-semibold shadow-lg hover:shadow-yellow-400/50 transition-all hover:scale-105 inline-flex items-center justify-center">
                             <i class="fas fa-download mr-2"></i>Tải CV
                         </a>
                     </div>
@@ -233,128 +258,129 @@
             </div>
         </div>
     </section>
-<!-- About Section -->
-<section id="about" class="py-20">
-    <div class="container mx-auto px-6">
-        <div class="fade-in">
-            <!-- Tiêu đề -->
-            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Thông tin cá nhân</h2>
 
-            <div class="max-w-4xl mx-auto">
-                <div class="grid md:grid-cols-3 gap-8">
-                    
-                    <!-- Avatar + Social -->
-                    <div class="text-center">
-                        <!-- Avatar -->
-                        <div class="w-60 h-60 mx-auto mb-6 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 p-1 overflow-hidden">
-                            <img src="avatar.jpg" alt="Đỗ Thành Đạt" 
-                                class="w-full h-full object-cover rounded-lg">
-                        </div>
-                        <h3 class="text-2xl font-bold gradient-text mb-2">Đỗ Thành Đạt</h3>
-                        <p class="text-slate-400 mb-6">Sinh viên Kinh tế</p>
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="fade-in">
+                <!-- Tiêu đề -->
+                <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Thông tin cá nhân</h2>
 
-                        <!-- Social Media Links -->
-                        <div class="mt-6">
-                            <h4 class="text-xl font-bold text-yellow-400 mb-6 text-center">Kết nối với mình</h4>
-                            <div class="flex justify-center space-x-6">
-                                <!-- Facebook -->
-                                <a href="https://www.facebook.com/thahdt/" target="_blank" 
-                                   class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
-                                    <i class="fab fa-facebook-f text-white"></i>
-                                </a>
-                                <!-- Instagram -->
-                                <a href="https://www.instagram.com/thah_dt/" target="_blank" 
-                                   class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
-                                    <i class="fab fa-instagram text-white"></i>
-                                </a>
-                                <!-- TikTok -->
-                                <a href="https://www.tiktok.com/@thahdt" target="_blank" 
-                                   class="w-12 h-12 bg-black rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
-                                    <i class="fab fa-tiktok text-white"></i>
-                                </a>
-                                <!-- LinkedIn -->
-                                <a href="https://www.linkedin.com/in/%C4%91%E1%BB%97-%C4%91%E1%BA%A1t-2bb489367/" target="_blank" 
-                                   class="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
-                                    <i class="fab fa-linkedin-in text-white"></i>
-                                </a>
+                <div class="max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        
+                        <!-- Avatar + Social -->
+                        <div class="text-center">
+                            <!-- Avatar -->
+                            <div class="w-40 h-40 md:w-60 md:h-60 mx-auto mb-6 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 p-1 overflow-hidden">
+                                <img src="avatar.jpg" alt="Đỗ Thành Đạt" 
+                                    class="w-full h-full object-cover rounded-lg">
                             </div>
-                        </div>
-                    </div>
+                            <h3 class="text-2xl font-bold gradient-text mb-2">Đỗ Thành Đạt</h3>
+                            <p class="text-slate-400 mb-6">Sinh viên Kinh tế</p>
 
-                    <!-- Personal Info -->
-                    <div class="md:col-span-2">
-                        <div class="glassmorphism rounded-2xl p-8">
-                            <h4 class="text-xl font-bold text-yellow-400 mb-6 text-center">Thông tin chi tiết</h4>
-                            
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-user text-slate-900"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-400 text-sm">Họ và tên</p>
-                                        <p class="font-semibold">Đỗ Thành Đạt</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-map-marker-alt text-slate-900"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-400 text-sm">Quê quán</p>
-                                        <p class="font-semibold">Lạng Giang, Bắc Ninh, Việt Nam</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-venus-mars text-slate-900"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-400 text-sm">Giới tính</p>
-                                        <p class="font-semibold">Nam</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-heart text-slate-900"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-400 text-sm">Tình trạng hôn nhân</p>
-                                        <p class="font-semibold">Độc thân</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-calendar text-slate-900"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-400 text-sm">Ngày sinh</p>
-                                        <p class="font-semibold">14/08/2005</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-graduation-cap text-slate-900"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-400 text-sm">Chuyên ngành</p>
-                                        <p class="font-semibold">Kinh tế Quốc tế</p>
-                                    </div>
+                            <!-- Social Media Links -->
+                            <div class="mt-6">
+                                <h4 class="text-xl font-bold text-yellow-400 mb-6 text-center">Kết nối với mình</h4>
+                                <div class="flex justify-center space-x-6">
+                                    <!-- Facebook -->
+                                    <a href="https://www.facebook.com/thahdt/" target="_blank"
+                                        class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
+                                        <i class="fab fa-facebook-f text-white"></i>
+                                    </a>
+                                    <!-- Instagram -->
+                                    <a href="https://www.instagram.com/thah_dt/" target="_blank"
+                                        class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
+                                        <i class="fab fa-instagram text-white"></i>
+                                    </a>
+                                    <!-- TikTok -->
+                                    <a href="https://www.tiktok.com/@thahdt" target="_blank"
+                                        class="w-12 h-12 bg-black rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
+                                        <i class="fab fa-tiktok text-white"></i>
+                                    </a>
+                                    <!-- LinkedIn -->
+                                    <a href="https://www.linkedin.com/in/%C4%91%E1%BB%97-%C4%91%E1%BA%A1t-2bb489367/" target="_blank"
+                                        class="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center hover:scale-110 transition-transform glow-button">
+                                        <i class="fab fa-linkedin-in text-white"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <!-- Personal Info -->
+                        <div class="md:col-span-2">
+                            <div class="glassmorphism rounded-2xl p-8">
+                                <h4 class="text-xl font-bold text-yellow-400 mb-6 text-center">Thông tin chi tiết</h4>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-user text-slate-900"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-sm">Họ và tên</p>
+                                            <p class="font-semibold">Đỗ Thành Đạt</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-map-marker-alt text-slate-900"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-sm">Quê quán</p>
+                                            <p class="font-semibold">Lạng Giang, Bắc Ninh, Việt Nam</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-venus-mars text-slate-900"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-sm">Giới tính</p>
+                                            <p class="font-semibold">Nam</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-heart text-slate-900"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-sm">Tình trạng hôn nhân</p>
+                                            <p class="font-semibold">Độc thân</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-calendar text-slate-900"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-sm">Ngày sinh</p>
+                                            <p class="font-semibold">14/08/2005</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-graduation-cap text-slate-900"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-slate-400 text-sm">Chuyên ngành</p>
+                                            <p class="font-semibold">Kinh tế Quốc tế</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Education & Activities -->
     <section id="education" class="py-20 bg-slate-800">
@@ -368,10 +394,10 @@
                         
                         <div class="space-y-8">
                             <div class="relative pl-12 timeline-item">
-                                <div class="glassmorphism rounded-lg p-6">
+                                <div class="glassmorphism rounded-lg p-6 hover:translate-x-2 transition-transform">
                                     <div class="flex items-center mb-2">
                                         <i class="fas fa-graduation-cap text-yellow-400 mr-3"></i>
-                                        <span class="text-yellow-400 font-semibold">2023 - ????</span>
+                                        <span class="text-yellow-400 font-semibold">2023 - Nay</span>
                                     </div>
                                     <h3 class="text-xl font-bold mb-2">Sinh viên Kinh tế</h3>
                                     <p class="text-slate-400 mb-2">Trường Đại học Ngoại thương</p>
@@ -380,26 +406,26 @@
                             </div>
                             
                             <div class="relative pl-12 timeline-item">
-                                <div class="glassmorphism rounded-lg p-6">
+                                <div class="glassmorphism rounded-lg p-6 hover:translate-x-2 transition-transform">
                                     <div class="flex items-center mb-2">
                                         <i class="fas fa-trophy text-yellow-400 mr-3"></i>
                                         <span class="text-yellow-400 font-semibold">2024</span>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Sau này mí viết</h3>
-                                    <p class="text-slate-400 mb-2">Nha</p>
-                                    <p class="text-slate-300">Đoán xem có gì</p>
+                                    <h3 class="text-xl font-bold mb-2">Hoạt động nghiên cứu</h3>
+                                    <p class="text-slate-400 mb-2">Nghiên cứu khoa học sinh viên</p>
+                                    <p class="text-slate-300">Đang triển khai đề tài về kinh tế số...</p>
                                 </div>
                             </div>
                             
                             <div class="relative pl-12 timeline-item">
-                                <div class="glassmorphism rounded-lg p-6">
+                                <div class="glassmorphism rounded-lg p-6 hover:translate-x-2 transition-transform">
                                     <div class="flex items-center mb-2">
                                         <i class="fas fa-certificate text-yellow-400 mr-3"></i>
                                         <span class="text-yellow-400 font-semibold">2025</span>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Khéo</h3>
-                                    <p class="text-slate-400 mb-2">Không</p>
-                                    <p class="text-slate-300">có gì</p>
+                                    <h3 class="text-xl font-bold mb-2">Mục tiêu tương lai</h3>
+                                    <p class="text-slate-400 mb-2">Đạt chứng chỉ IELTS 8.0</p>
+                                    <p class="text-slate-300">Và tốt nghiệp loại Xuất sắc</p>
                                 </div>
                             </div>
                         </div>
@@ -410,7 +436,7 @@
     </section>
 
     <!-- Skills & Projects -->
-   <section id="skills" class="py-20 bg-slate-800/50">
+   <section id="skills" class="py-20 bg-slate-800/30">
         <div class="container mx-auto px-6">
             <div class="fade-in">
                 <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Năng lực & Dự án</h2>
@@ -509,57 +535,215 @@
             </div>
         </div>
     </section>
-<section id="donate" class="py-20 relative overflow-hidden">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400/20 rounded-full blur-[100px] -z-10"></div>
-    <div class="container mx-auto px-6">
-        <div class="fade-in max-w-4xl mx-auto">
-            <div class="glassmorphism rounded-2xl p-8 md:p-12 border border-yellow-400/30 relative overflow-hidden">
-                
-                <div class="text-center mb-10">
-                    <div class="inline-block p-3 rounded-full bg-yellow-400/10 mb-4">
-                        <i class="fas fa-coins text-3xl text-yellow-400"></i>
+
+    <!-- GPA CALCULATOR SECTION (MOVED DOWN) -->
+    <section id="gpa-tool" class="py-20 relative bg-slate-800/50">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent"></div>
+        <div class="container mx-auto px-6">
+            <div class="fade-in max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center justify-center p-3 rounded-full bg-yellow-400/10 mb-4 text-yellow-400 border border-yellow-400/20">
+                        <i class="fas fa-calculator text-2xl"></i>
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">DỰ ÁN NUÔI TÔI</h2>
-                    <p class="text-slate-400">Có thể bạn đang nuôi một tỷ phú trong tương lai!</p>
+                    <h2 class="text-4xl font-bold gradient-text mb-4">GÓC TÍNH GPA</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Đây là công cụ mà tớ tạo ra để giúp cậu tính toán điểm số để chinh phục mục tiêu của mình.</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-10 items-center">
-                    <div class="space-y-6">
-                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
-                            <p class="text-sm text-slate-400 mb-1">Ngân hàng</p>
-                            <p class="text-xl font-bold text-white">MB Bank</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700 group cursor-pointer" onclick="copySTK()">
-                            <div class="flex justify-between items-center mb-1">
-                                <p class="text-sm text-slate-400">Số tài khoản</p>
+                <div class="grid lg:grid-cols-12 gap-8">
+                    <!-- LEFT COLUMN: Settings & Input -->
+                    <div class="lg:col-span-4 space-y-6">
+                        <!-- Scale Config -->
+                        <div class="glassmorphism rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-4 text-yellow-400">
+                                <i class="fas fa-cog"></i>
+                                <h3 class="font-semibold">1. Thang điểm tính toán</h3>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <p id="stk-number" class="text-2xl font-bold text-yellow-400 font-mono tracking-wider">193987654321</p>
-                                <i class="fas fa-copy text-slate-400 group-hover:text-yellow-400 transition-colors"></i>
+                            <div class="space-y-3">
+                                <label class="flex items-start gap-3 p-3 rounded-lg border border-slate-700 cursor-pointer transition-all hover:bg-slate-700/50 has-[:checked]:bg-yellow-400/10 has-[:checked]:border-yellow-400/50">
+                                    <input type="radio" name="scale" value="type1" checked class="mt-1 text-yellow-400 focus:ring-yellow-400 bg-slate-800 border-slate-600">
+                                    <div>
+                                        <span class="block font-medium text-sm text-slate-200">Thang số 1 (A = 4.0)</span>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-start gap-3 p-3 rounded-lg border border-slate-700 cursor-pointer transition-all hover:bg-slate-700/50 has-[:checked]:bg-yellow-400/10 has-[:checked]:border-yellow-400/50">
+                                    <input type="radio" name="scale" value="type2" class="mt-1 text-yellow-400 focus:ring-yellow-400 bg-slate-800 border-slate-600">
+                                    <div>
+                                        <span class="block font-medium text-sm text-slate-200">Thang số 2 (A = 3.7)</span>
+                                    </div>
+                                </label>
                             </div>
                         </div>
-                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
-                            <p class="text-sm text-slate-400 mb-1">Chủ tài khoản</p>
-                            <p class="text-xl font-bold text-white uppercase">DO THANH DAT</p>
+
+                        <!-- Current Info -->
+                        <div class="glassmorphism rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-4 text-yellow-400">
+                                <i class="fas fa-book-open"></i>
+                                <h3 class="font-semibold">2. Thông tin học tập</h3>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-400 mb-1.5">Số tín chỉ cần đạt</label>
+                                    <input type="number" id="totalCredits" placeholder="VD: 130" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg p-2.5 text-white focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-colors placeholder-slate-600">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-400 mb-1.5">Số tín chỉ đã tích lũy</label>
+                                        <input type="number" id="earnedCredits" placeholder="VD: 60" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg p-2.5 text-white focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-colors placeholder-slate-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-400 mb-1.5">GPA hiện tại</label>
+                                        <input type="number" id="currentGPA" placeholder="VD: 3.1" step="0.01" max="4.0" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg p-2.5 text-white focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-colors placeholder-slate-600">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 p-3 bg-slate-800/50 rounded-lg border border-slate-700 flex gap-2 text-xs text-slate-400">
+                                <i class="fas fa-info-circle mt-0.5"></i>
+                                <p>Không tính GDQP, Thể chất vào GPA.</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex justify-center">
-                        <div class="bg-white p-4 rounded-xl shadow-2xl">
-                            <img src="https://img.vietqr.io/image/MB-193987654321-compact.png?amount=0&addInfo=Nuoi%20Dat%20Di" 
-                                 class="w-48 h-48 object-contain rounded-lg">
+                    <!-- RIGHT COLUMN: Results -->
+                    <div class="lg:col-span-8 space-y-6">
+                        <!-- Main Target Result -->
+                        <div class="glassmorphism rounded-xl p-1 border-t-4 border-t-green-500 overflow-hidden">
+                            <div class="p-6 bg-slate-800/40">
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                            <i class="fas fa-bullseye text-green-500"></i>
+                                            Mục tiêu GPA
+                                        </h3>
+                                        <p class="text-sm text-slate-400">Tớ sẽ tính cho cậu cách vượt qua mục tiêu của mình.</p>
+                                    </div>
+                                    <div class="w-full md:w-auto">
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <i class="fas fa-crosshairs text-slate-500"></i>
+                                            </div>
+                                            <input type="number" id="targetGPA" placeholder="Nhập mục tiêu (VD: 3.2)" step="0.01" max="4.0" class="pl-10 w-full md:w-48 bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-colors font-bold text-center">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="result-container" class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50">
+                                    <div class="text-center text-slate-500 py-4">
+                                        <i class="fas fa-calculator text-3xl mb-2 opacity-30"></i>
+                                        <p>Nhập thông tin bên trái và mục tiêu để xem kết quả.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Planner -->
+                        <div id="planner-section" class="glassmorphism rounded-xl p-1 border-t-4 border-t-purple-500 overflow-hidden hidden">
+                            <div class="p-6 bg-slate-800/40">
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                        <i class="fas fa-chart-pie text-purple-500"></i>
+                                        Chi tiết kế hoạch tín chỉ
+                                    </h3>
+                                    <p class="text-sm text-slate-400">Phân bổ <span id="remaining-credits-text" class="font-bold text-white">0</span> tín chỉ còn lại vào các mức điểm.</p>
+                                </div>
+
+                                <!-- Progress Bar -->
+                                <div class="mb-6">
+                                    <div class="flex justify-between text-xs font-medium mb-1.5">
+                                        <span class="text-slate-400">Đã phân bổ: <span id="allocated-text" class="text-purple-400 font-bold">0</span></span>
+                                        <span id="over-allocated-warning" class="text-red-400 font-bold hidden">Vượt quá giới hạn!</span>
+                                    </div>
+                                    <div class="w-full bg-slate-700 rounded-full h-3 overflow-hidden">
+                                        <div id="allocation-bar" class="h-full bg-purple-500 transition-all duration-300 w-0"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Grid Inputs -->
+                                <div id="grade-inputs-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6">
+                                    <!-- Inputs will be injected here by JS -->
+                                </div>
+
+                                <!-- Final Result Box -->
+                                <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center shadow-lg border border-slate-700 relative overflow-hidden">
+                                    <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full -mr-10 -mt-10 pointer-events-none blur-xl"></div>
+                                    
+                                    <div class="relative z-10 mb-4 md:mb-0 text-center md:text-left">
+                                        <div class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Kết quả dự kiến</div>
+                                        <div class="text-xs text-slate-500">Dựa trên kế hoạch bạn nhập</div>
+                                    </div>
+
+                                    <div class="text-right relative z-10 flex items-center gap-4">
+                                        <div>
+                                            <div id="projected-gpa" class="text-4xl font-bold text-white">---</div>
+                                            <div class="text-xs text-slate-400">GPA Tích lũy cuối khóa</div>
+                                        </div>
+                                        <div id="projected-icon" class="hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div id="copy-toast" class="absolute top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform -translate-y-20 transition-transform duration-300 flex items-center gap-2 z-50">
-                    <i class="fas fa-check-circle"></i> Đã sao chép số tài khoản!
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <section id="projects" class="py-20 bg-slate-800 relative hidden">
+         <!-- Placeholder for Projects Section if needed -->
+    </section>
+
+    <section id="donate" class="py-20 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400/20 rounded-full blur-[100px] -z-10"></div>
+        <div class="container mx-auto px-6">
+            <div class="fade-in max-w-4xl mx-auto">
+                <div class="glassmorphism rounded-2xl p-8 md:p-12 border border-yellow-400/30 relative overflow-hidden">
+                    
+                    <div class="text-center mb-10">
+                        <div class="inline-block p-3 rounded-full bg-yellow-400/10 mb-4">
+                            <i class="fas fa-coins text-3xl text-yellow-400"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-4">DỰ ÁN NUÔI TÔI</h2>
+                        <p class="text-slate-400">Có thể bạn đang nuôi một tỷ phú trong tương lai!</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-10 items-center">
+                        <div class="space-y-6">
+                            <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                                <p class="text-sm text-slate-400 mb-1">Ngân hàng</p>
+                                <p class="text-xl font-bold text-white">MB Bank</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700 group cursor-pointer" onclick="copySTK()">
+                                <div class="flex justify-between items-center mb-1">
+                                    <p class="text-sm text-slate-400">Số tài khoản</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p id="stk-number" class="text-2xl font-bold text-yellow-400 font-mono tracking-wider">193987654321</p>
+                                    <i class="fas fa-copy text-slate-400 group-hover:text-yellow-400 transition-colors"></i>
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                                <p class="text-sm text-slate-400 mb-1">Chủ tài khoản</p>
+                                <p class="text-xl font-bold text-white uppercase">DO THANH DAT</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <div class="bg-white p-4 rounded-xl shadow-2xl">
+                                <img src="https://img.vietqr.io/image/MB-193987654321-compact.png?amount=0&addInfo=Nuoi%20Dat%20Di" 
+                                     class="w-48 h-48 object-contain rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="copy-toast" class="absolute top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform -translate-y-20 transition-transform duration-300 flex items-center gap-2 z-50">
+                        <i class="fas fa-check-circle"></i> Đã sao chép số tài khoản!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="py-8 border-t border-slate-700">
@@ -570,6 +754,7 @@
         </div>
     </footer>
 
+    <!-- Main Scripts -->
     <script>
         // Typewriter effect
         const texts = [
@@ -700,100 +885,296 @@
         skillBars.forEach(bar => {
             skillObserver.observe(bar);
         });
+
+        // Copy STK
+        function copySTK() {
+            const stk = document.getElementById('stk-number').innerText;
+            navigator.clipboard.writeText(stk).then(() => {
+                const toast = document.getElementById('copy-toast');
+                toast.classList.remove('-translate-y-20'); 
+                setTimeout(() => {
+                    toast.classList.add('-translate-y-20'); 
+                }, 2000);
+            });
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'967c908f97f28512',t:'MTc1Mzk1OTM0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-<script>
-    // --- SCRIPT AQI (Phiên bản khớp với HTML hiện tại của bạn) ---
-    async function fetchAQI() {
-        // Token và URL của bạn
-        const myToken = '0413078940d7c6b3592fd55f2b68ee87f28e99f0';
-        const url = `https://api.waqi.info/feed/here/?token=${myToken}`;
 
-        // Lấy đúng các ID trong HTML của bạn
-        const aqiValueEl = document.getElementById('aqi-value');
-        const aqiStatusEl = document.getElementById('aqi-status');
-        
-        // Lấy icon để đổi màu (tìm thẻ i bên trong aqi-container)
-        const aqiIcon = document.querySelector('#aqi-container i');
-        
-        // Lấy dòng chữ "AQI (BN)" để cập nhật tên thành phố cho đúng thực tế
-        const aqiLabel = document.querySelector('#aqi-container span.uppercase');
-
-        try {
-            const response = await fetch(url);
-            const result = await response.json();
-
-            if (result.status === 'ok') {
-                const data = result.data;
-                const aqi = data.aqi;
-                
-                // Lấy tên thành phố từ API và làm gọn
-                let cityName = data.city.name.split(',')[0]; 
-                if (cityName.length > 10) cityName = cityName.substring(0, 10) + '..';
-
-                // 1. Cập nhật số liệu
-                aqiValueEl.innerText = aqi;
-                
-                // 2. Cập nhật tên địa điểm (Thay chữ BN cứng bằng địa điểm thật)
-                if(aqiLabel) aqiLabel.innerText = `AQI (${cityName})`;
-
-                // 3. Xử lý màu sắc và trạng thái
-                let colorClass = '';
-                let statusText = '';
-                
-                // Xóa các lớp màu cũ
-                aqiValueEl.className = "font-bold"; 
-                aqiStatusEl.className = "absolute top-full mt-2 right-0 w-max px-3 py-1 rounded-lg bg-slate-800 text-center text-xs shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-slate-700 z-50";
-                
-                if (aqiIcon) aqiIcon.className = "fas mr-2 animate-pulse"; // Reset icon
-
-                if (aqi <= 50) {
-                    colorClass = 'text-green-400';
-                    statusText = 'Cho phép em thở';
-                    if(aqiIcon) aqiIcon.classList.add('fa-leaf', 'text-green-400');
-                } else if (aqi <= 100) {
-                    colorClass = 'text-yellow-400';
-                    statusText = 'Tôi không cho phép em ra ngoài';
-                    if(aqiIcon) aqiIcon.classList.add('fa-wind', 'text-yellow-400');
-                } else if (aqi <= 150) {
-                    colorClass = 'text-orange-400';
-                    statusText = 'Đừng ra đường nữa, ở lại với tôi';
-                    if(aqiIcon) aqiIcon.classList.add('fa-smog', 'text-orange-400');
-                } else {
-                    colorClass = 'text-red-500';
-                    statusText = 'Tôi lo cho em lắm đấy!';
-                    if(aqiIcon) aqiIcon.classList.add('fa-biohazard', 'text-red-500');
+    <!-- GPA CALCULATOR LOGIC (Pure JS) -->
+    <script>
+        (function() {
+            // Data Config
+            const scales = {
+                type1: {
+                    name: "Thang chuẩn (A = 4.0)",
+                    details: [
+                        { char: 'A', val: 4.0, color: 'text-green-500' },
+                        { char: 'B+', val: 3.5, color: 'text-blue-500' },
+                        { char: 'B', val: 3.0, color: 'text-blue-500' },
+                        { char: 'C+', val: 2.5, color: 'text-yellow-500' },
+                        { char: 'C', val: 2.0, color: 'text-yellow-500' },
+                        { char: 'D+', val: 1.5, color: 'text-orange-500' },
+                        { char: 'D', val: 1.0, color: 'text-orange-500' },
+                        { char: 'F', val: 0.0, color: 'text-red-500' }
+                    ]
+                },
+                type2: {
+                    name: "Thang chi tiết (A+ = 4.0, A = 3.7)",
+                    details: [
+                        { char: 'A+', val: 4.0, color: 'text-green-500' },
+                        { char: 'A', val: 3.7, color: 'text-green-500' },
+                        { char: 'B+', val: 3.5, color: 'text-blue-500' },
+                        { char: 'B', val: 3.0, color: 'text-blue-500' },
+                        { char: 'C+', val: 2.5, color: 'text-yellow-500' },
+                        { char: 'C', val: 2.0, color: 'text-yellow-500' },
+                        { char: 'D+', val: 1.5, color: 'text-orange-500' },
+                        { char: 'D', val: 1.0, color: 'text-orange-500' },
+                        { char: 'F', val: 0.0, color: 'text-red-500' }
+                    ]
                 }
+            };
 
-                // Áp dụng màu mới
-                aqiValueEl.classList.add(colorClass);
-                aqiStatusEl.classList.add(colorClass); // Đổi màu chữ trong tooltip
-                aqiStatusEl.innerText = statusText;
+            // DOM Elements
+            const els = {
+                scaleRadios: document.getElementsByName('scale'),
+                totalCredits: document.getElementById('totalCredits'),
+                earnedCredits: document.getElementById('earnedCredits'),
+                currentGPA: document.getElementById('currentGPA'),
+                targetGPA: document.getElementById('targetGPA'),
+                
+                resultContainer: document.getElementById('result-container'),
+                plannerSection: document.getElementById('planner-section'),
+                remainingText: document.getElementById('remaining-credits-text'),
+                allocatedText: document.getElementById('allocated-text'),
+                overAllocatedWarning: document.getElementById('over-allocated-warning'),
+                allocationBar: document.getElementById('allocation-bar'),
+                gradeInputsGrid: document.getElementById('grade-inputs-grid'),
+                projectedGPA: document.getElementById('projected-gpa'),
+                projectedIcon: document.getElementById('projected-icon')
+            };
 
-            } else {
-                throw new Error('API Error');
+            let state = {
+                scaleType: 'type1',
+                plan: {} // Stores grade: credits
+            };
+
+            // Helpers
+            const parse = (val) => parseFloat(val) || 0;
+
+            // Render Grade Inputs for Planner
+            function renderPlannerInputs() {
+                els.gradeInputsGrid.innerHTML = '';
+                const currentScale = scales[state.scaleType].details;
+                
+                currentScale.forEach(grade => {
+                    const div = document.createElement('div');
+                    div.className = `p-3 rounded-lg border border-slate-700 bg-slate-800/50 flex flex-col items-center`;
+                    div.innerHTML = `
+                        <div class="flex w-full justify-between items-center mb-2">
+                            <span class="font-bold text-lg ${grade.color}">${grade.char}</span>
+                            <span class="text-xs text-slate-500 font-mono">${grade.val}</span>
+                        </div>
+                        <input type="number" data-grade="${grade.char}" placeholder="0" class="grade-input w-full text-sm p-1.5 border border-slate-700 rounded bg-slate-900 text-white text-center focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
+                    `;
+                    els.gradeInputsGrid.appendChild(div);
+                });
+
+                // Re-attach listeners to new inputs
+                document.querySelectorAll('.grade-input').forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        state.plan[e.target.dataset.grade] = parse(e.target.value);
+                        updateCalculations();
+                    });
+                });
             }
 
-        } catch (error) {
-            console.error('Lỗi AQI:', error);
-            aqiValueEl.innerText = "--";
-            aqiStatusEl.innerText = "Lỗi kết nối";
-        }
-    }
+            // Main Calculation Logic
+            function updateCalculations() {
+                const total = parse(els.totalCredits.value);
+                const earned = parse(els.earnedCredits.value);
+                const current = parse(els.currentGPA.value);
+                const target = parse(els.targetGPA.value);
 
-    // Gọi hàm
-    fetchAQI();
-    // Hàm Copy Số tài khoản
-    function copySTK() {
-        const stk = document.getElementById('stk-number').innerText;
-        navigator.clipboard.writeText(stk).then(() => {
-            const toast = document.getElementById('copy-toast');
-            toast.classList.remove('-translate-y-20'); 
-            setTimeout(() => {
-                toast.classList.add('-translate-y-20'); 
-            }, 2000);
-        });
-    }
-</script>
+                const remaining = total - earned;
+
+                // 1. Calculate Target Requirement
+                let reqHtml = '';
+                if (!els.totalCredits.value || !els.earnedCredits.value || !els.targetGPA.value) {
+                     reqHtml = `
+                        <div class="text-center text-slate-500 py-4">
+                            <i class="fas fa-calculator text-3xl mb-2 opacity-30"></i>
+                            <p>Nhập đủ thông tin để xem phân tích.</p>
+                        </div>
+                     `;
+                     els.plannerSection.classList.add('hidden');
+                } else if (remaining <= 0) {
+                     reqHtml = `<div class="text-red-400 text-center font-medium">Đã hoàn thành hết tín chỉ!</div>`;
+                     els.plannerSection.classList.add('hidden');
+                } else {
+                    const requiredPoints = (target * total) - (current * earned);
+                    const requiredGPA = requiredPoints / remaining;
+                    const formattedReq = requiredGPA.toFixed(2);
+                    
+                    let statusBadge = '';
+                    if(requiredGPA > 4.0) statusBadge = '<span class="px-3 py-1 bg-red-900/50 text-red-400 rounded-full text-xs font-bold border border-red-900">Đừng buồn nhé, sẽ còn con đường khác!</span>';
+                    else if(requiredGPA > 3.6) statusBadge = '<span class="px-3 py-1 bg-orange-900/50 text-orange-400 rounded-full text-xs font-bold border border-orange-900">Căng đấy bro</span>';
+                    else if(requiredGPA <= 0) statusBadge = '<span class="px-3 py-1 bg-blue-900/50 text-blue-400 rounded-full text-xs font-bold border border-blue-900">Thừa rồi, chơi thôi!</span>';
+                    else statusBadge = '<span class="px-3 py-1 bg-green-900/50 text-green-400 rounded-full text-xs font-bold border border-green-900">Cánh cửa rộng lắm rồi!</span>';
+
+                    reqHtml = `
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-700">
+                             <div class="pb-4 md:pb-0">
+                                <span class="text-xs text-slate-500 uppercase tracking-wide">TC Còn lại</span>
+                                <div class="text-3xl font-bold text-white mt-1">${remaining}</div>
+                             </div>
+                             <div class="py-4 md:py-0">
+                                <span class="text-xs text-slate-500 uppercase tracking-wide">GPA Cần đạt</span>
+                                <div class="text-3xl font-extrabold mt-1 ${requiredGPA > 4 ? 'text-red-500' : 'text-green-500'}">${formattedReq}</div>
+                             </div>
+                             <div class="pt-4 md:pt-0 flex flex-col justify-center items-center">
+                                <span class="text-xs text-slate-500 uppercase tracking-wide mb-2">Đánh giá</span>
+                                ${statusBadge}
+                             </div>
+                        </div>
+                    `;
+                    
+                    // Show Planner
+                    els.plannerSection.classList.remove('hidden');
+                    els.remainingText.innerText = remaining;
+                }
+                els.resultContainer.innerHTML = reqHtml;
+
+                // 2. Calculate Planner (if active)
+                if (remaining > 0) {
+                    let plannedCredits = 0;
+                    let plannedPoints = 0;
+                    
+                    const currentScaleDetails = scales[state.scaleType].details;
+                    
+                    for (const [grade, credits] of Object.entries(state.plan)) {
+                         const credVal = parse(credits);
+                         if(credVal > 0) {
+                             const gradeInfo = currentScaleDetails.find(g => g.char === grade);
+                             if(gradeInfo) {
+                                 plannedCredits += credVal;
+                                 plannedPoints += (credVal * gradeInfo.val);
+                             }
+                         }
+                    }
+
+                    // Progress Bar
+                    els.allocatedText.innerText = plannedCredits;
+                    const percent = Math.min((plannedCredits / remaining) * 100, 100);
+                    els.allocationBar.style.width = `${percent}%`;
+                    
+                    if (plannedCredits > remaining) {
+                        els.overAllocatedWarning.classList.remove('hidden');
+                        els.allocationBar.classList.add('bg-red-500');
+                        els.allocationBar.classList.remove('bg-purple-500');
+                    } else {
+                        els.overAllocatedWarning.classList.add('hidden');
+                        els.allocationBar.classList.add('bg-purple-500');
+                        els.allocationBar.classList.remove('bg-red-500');
+                    }
+
+                    // Final Projection
+                    const finalTotalCredits = earned + plannedCredits;
+                    const finalTotalPoints = (earned * current) + plannedPoints;
+                    const projected = finalTotalCredits > 0 ? (finalTotalPoints / finalTotalCredits).toFixed(2) : current;
+                    
+                    els.projectedGPA.innerText = projected;
+                    
+                    // Check Icon
+                    els.projectedIcon.classList.remove('hidden');
+                    if (target > 0 && parseFloat(projected) >= target) {
+                        els.projectedIcon.innerHTML = '<i class="fas fa-check-circle text-3xl text-green-400"></i>';
+                    } else {
+                        els.projectedIcon.innerHTML = '<i class="fas fa-exclamation-circle text-3xl text-red-400"></i>';
+                    }
+                }
+            }
+
+            // Initialization
+            els.scaleRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    state.scaleType = e.target.value;
+                    state.plan = {}; // Reset plan
+                    renderPlannerInputs();
+                    updateCalculations();
+                });
+            });
+
+            [els.totalCredits, els.earnedCredits, els.currentGPA, els.targetGPA].forEach(input => {
+                input.addEventListener('input', updateCalculations);
+            });
+
+            // Init Render
+            renderPlannerInputs();
+
+        })();
+    </script>
+
+    <!-- AQI Script (Preserved) -->
+    <script>
+        async function fetchAQI() {
+            const myToken = '0413078940d7c6b3592fd55f2b68ee87f28e99f0';
+            const url = `https://api.waqi.info/feed/here/?token=${myToken}`;
+            const aqiValueEl = document.getElementById('aqi-value');
+            const aqiStatusEl = document.getElementById('aqi-status');
+            const aqiIcon = document.querySelector('#aqi-container i');
+            const aqiLabel = document.querySelector('#aqi-container span.uppercase');
+
+            try {
+                const response = await fetch(url);
+                const result = await response.json();
+
+                if (result.status === 'ok') {
+                    const data = result.data;
+                    const aqi = data.aqi;
+                    let cityName = data.city.name.split(',')[0]; 
+                    if (cityName.length > 10) cityName = cityName.substring(0, 10) + '..';
+
+                    aqiValueEl.innerText = aqi;
+                    if(aqiLabel) aqiLabel.innerText = `AQI (${cityName})`;
+
+                    let colorClass = '';
+                    let statusText = '';
+                    
+                    aqiValueEl.className = "font-bold"; 
+                    aqiStatusEl.className = "absolute top-full mt-2 right-0 w-max px-3 py-1 rounded-lg bg-slate-800 text-center text-xs shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-slate-700 z-50";
+                    if (aqiIcon) aqiIcon.className = "fas mr-2 animate-pulse";
+
+                    if (aqi <= 50) {
+                        colorClass = 'text-green-400';
+                        statusText = 'Cho phép em thở';
+                        if(aqiIcon) aqiIcon.classList.add('fa-leaf', 'text-green-400');
+                    } else if (aqi <= 100) {
+                        colorClass = 'text-yellow-400';
+                        statusText = 'Tôi không cho phép em ra ngoài';
+                        if(aqiIcon) aqiIcon.classList.add('fa-wind', 'text-yellow-400');
+                    } else if (aqi <= 150) {
+                        colorClass = 'text-orange-400';
+                        statusText = 'Đừng ra đường nữa, ở lại với tôi';
+                        if(aqiIcon) aqiIcon.classList.add('fa-smog', 'text-orange-400');
+                    } else {
+                        colorClass = 'text-red-500';
+                        statusText = 'Tôi lo cho em lắm đấy!';
+                        if(aqiIcon) aqiIcon.classList.add('fa-biohazard', 'text-red-500');
+                    }
+
+                    aqiValueEl.classList.add(colorClass);
+                    aqiStatusEl.classList.add(colorClass);
+                    aqiStatusEl.innerText = statusText;
+
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch (error) {
+                console.error('Lỗi AQI:', error);
+                aqiValueEl.innerText = "--";
+                aqiStatusEl.innerText = "Lỗi kết nối";
+            }
+        }
+        fetchAQI();
+    </script>
 </body>
 </html>
